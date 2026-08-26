@@ -1,133 +1,531 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
-@import "@fontsource-variable/geist";
+@source "../../../apps/web/src";
+@source "../components";
 
 @custom-variant dark (&:is(.dark *));
-@source "../../../apps/**/*.{ts,tsx}";
-@source "../../../components/**/*.{ts,tsx}";
-@source "../**/*.{ts,tsx}";
 
-@theme inline {
-    --font-heading: var(--font-sans);
-    --color-sidebar-ring: var(--sidebar-ring);
-    --color-sidebar-border: var(--sidebar-border);
-    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-    --color-sidebar-accent: var(--sidebar-accent);
-    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-    --color-sidebar-primary: var(--sidebar-primary);
-    --color-sidebar-foreground: var(--sidebar-foreground);
-    --color-sidebar: var(--sidebar);
-    --color-chart-5: var(--chart-5);
-    --color-chart-4: var(--chart-4);
-    --color-chart-3: var(--chart-3);
-    --color-chart-2: var(--chart-2);
-    --color-chart-1: var(--chart-1);
-    --color-ring: var(--ring);
-    --color-input: var(--input);
-    --color-border: var(--border);
-    --color-destructive: var(--destructive);
-    --color-accent-foreground: var(--accent-foreground);
-    --color-accent: var(--accent);
-    --color-muted-foreground: var(--muted-foreground);
-    --color-muted: var(--muted);
-    --color-secondary-foreground: var(--secondary-foreground);
-    --color-secondary: var(--secondary);
-    --color-primary-foreground: var(--primary-foreground);
-    --color-primary: var(--primary);
-    --color-popover-foreground: var(--popover-foreground);
-    --color-popover: var(--popover);
-    --color-card-foreground: var(--card-foreground);
-    --color-card: var(--card);
-    --color-foreground: var(--foreground);
-    --color-background: var(--background);
-    --radius-sm: calc(var(--radius) * 0.6);
-    --radius-md: calc(var(--radius) * 0.8);
-    --radius-lg: var(--radius);
-    --radius-xl: calc(var(--radius) * 1.4);
-    --radius-2xl: calc(var(--radius) * 1.8);
-    --radius-3xl: calc(var(--radius) * 2.2);
-    --radius-4xl: calc(var(--radius) * 2.6);
-    --font-sans: 'Geist Variable', sans-serif;
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ THEME TOKEN DEFINITIONS (CSS CUSTOM PROPERTIES)
+   Mapped to Tailwind v4 @theme directive
+   ═══════════════════════════════════════════════════════════════════════════ */
+@theme {
+  --font-sans:
+    "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono:
+    "Geist Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    monospace;
+
+  /* Global Color Tokens */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Border Radii */
+  --radius-xs: calc(var(--radius) - 4px);
+  --radius-sm: calc(var(--radius) - 2px);
+  --radius-md: var(--radius);
+  --radius-lg: calc(var(--radius) + 2px);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  /* Button Tokens */
+  --color-universal-button: var(--universal-button);
+  --color-universal-orange: var(--universal-orange);
+  --color-universal-orange-hover-bg: var(--universal-orange-hover-bg);
+  --color-universal-orange-hover-text: var(--universal-orange-hover-text);
+  --color-round-button: var(--round-button);
+  --color-add-to-cart-button: var(--add-to-cart-button);
+
+  /* Inventory & Special Badges */
+  --color-price-drop: var(--price-drop);
+  --color-low-stock: var(--low-stock);
+  --color-new-batch: var(--new-batch);
+
+  /* Step Tracker Tokens */
+  --color-step-tracker: var(--step-tracker);
+  --color-step-tracker-text: var(--step-tracker-text);
+
+  /* Banner Tokens */
+  --color-banner-bg: var(--banner-bg);
+  --color-banner-border: var(--banner-border);
+  --color-banner-text: var(--banner-text);
+  --color-banner-accent: var(--banner-accent);
+
+  /* Sidebar Tokens */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Admin Dashboard Tokens */
+  --color-admin-title: var(--admin-title);
+  --color-admin-description: var(--admin-description);
+  --color-admin-border: var(--admin-border);
+  --color-admin-brand: var(--universal-button);
+  --color-admin-table-header-bg: var(--admin-table-header-bg);
+
+  /* Admin Stats Cards */
+  --color-admin-stat-active-bg: var(--admin-stat-active-bg);
+  --color-admin-stat-active-border: var(--admin-stat-active-border);
+  --color-admin-stat-active-text: var(--admin-stat-active-text);
+  --color-admin-stat-pending-bg: var(--admin-stat-pending-bg);
+  --color-admin-stat-pending-border: var(--admin-stat-pending-border);
+  --color-admin-stat-pending-text: var(--admin-stat-pending-text);
+  --color-admin-stat-suspended-bg: var(--admin-stat-suspended-bg);
+  --color-admin-stat-suspended-border: var(--admin-stat-suspended-border);
+  --color-admin-stat-suspended-text: var(--admin-stat-suspended-text);
+
+  /* Admin Badge Colors (Roles & Status) */
+  --color-admin-badge-green-bg: var(--admin-badge-green-bg);
+  --color-admin-badge-green-border: var(--admin-badge-green-border);
+  --color-admin-badge-green-text: var(--admin-badge-green-text);
+  --color-admin-badge-purple-bg: var(--admin-badge-purple-bg);
+  --color-admin-badge-purple-border: var(--admin-badge-purple-border);
+  --color-admin-badge-purple-text: var(--admin-badge-purple-text);
+  --color-admin-badge-lime-bg: var(--admin-badge-lime-bg);
+  --color-admin-badge-lime-border: var(--admin-badge-lime-border);
+  --color-admin-badge-lime-text: var(--admin-badge-lime-text);
+  --color-admin-badge-blue-bg: var(--admin-badge-blue-bg);
+  --color-admin-badge-blue-border: var(--admin-badge-blue-border);
+  --color-admin-badge-blue-text: var(--admin-badge-blue-text);
+
+  /* Admin Status Indicators */
+  --color-admin-status-active-dot: var(--admin-status-active-dot);
+  --color-admin-status-inactive-dot: var(--admin-status-inactive-dot);
+  --color-admin-status-pending-dot: var(--admin-status-pending-dot);
+  --color-admin-status-suspended-dot: var(--admin-status-suspended-dot);
+  --color-admin-input-ring: var(--admin-input-ring);
+  --color-admin-tab-bg: var(--admin-tab-bg);
+  --color-admin-card-hover: var(--admin-card-hover);
+
+  /* Chart Colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ LIGHT MODE THEME VARIABLES (:root)
+   Modify values here to change colors across the entire application in Light Mode.
+   ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.527 0.154 150.069);
-    --primary-foreground: oklch(0.982 0.018 155.826);
-    --secondary: oklch(0.967 0.001 286.375);
-    --secondary-foreground: oklch(0.21 0.006 285.885);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.871 0.15 154.449);
-    --chart-2: oklch(0.723 0.219 149.579);
-    --chart-3: oklch(0.627 0.194 149.214);
-    --chart-4: oklch(0.527 0.154 150.069);
-    --chart-5: oklch(0.448 0.119 151.328);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.627 0.194 149.214);
-    --sidebar-primary-foreground: oklch(0.982 0.018 155.826);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+  /* ── 1. Corner Radius ── */
+  --radius: 0.5rem;
+
+  /* ── 2. Global Base & Layout Colors ── */
+  --background: oklch(1 0 0); /* Main page background: Pure white */
+  --foreground: oklch(0.145 0 0); /* Default text color: Near black */
+  --card: oklch(1 0 0); /* Card surfaces: White */
+  --card-foreground: oklch(0.145 0 0); /* Text on cards */
+  --popover: oklch(1 0 0); /* Dropdown & popup surfaces */
+  --popover-foreground: oklch(0.145 0 0); /* Text in popovers */
+  --border: oklch(0.922 0 0); /* Neutral borders */
+  --input: oklch(0.922 0 0); /* Input border color */
+  --ring: #7ea817; /* Focus outline ring */
+
+  /* ── 3. Primary Brand Colors (SmartGrow Green - Light: #7EA817) ── */
+  --primary: #7ea817; /* Primary brand green */
+  --primary-light: #8ec01c; /* Light green variant */
+  --primary-dark: #6e9314; /* Dark green variant */
+  --primary-foreground: #ffffff; /* Text on primary buttons: White */
+
+  /* ── 4. Secondary, Muted & Accent Colors ── */
+  --secondary: oklch(0.97 0 0); /* Subtle secondary surface */
+  --secondary-foreground: oklch(0.205 0 0); /* Text on secondary */
+  --muted: oklch(0.97 0 0); /* Muted background for tags/tabs */
+  --muted-foreground: oklch(0.556 0 0); /* Subdued secondary text */
+  --accent: oklch(0.96 0 0); /* Hover accent background */
+  --accent-foreground: oklch(0.145 0 0); /* Text on accent */
+  --destructive: oklch(
+    0.577 0.245 27.325
+  ); /* Red for errors and delete actions */
+  --destructive-foreground: oklch(1 0 0);
+
+  /* ── 5. Button & Interactive Action Colors (Brand Green) ── */
+  --universal-button: #7ea817; /* Primary CTA button color: #7EA817 */
+  --universal-orange: #7ea817; /* Legacy alias for button color */
+  --universal-orange-hover-bg: rgba(
+    126,
+    168,
+    23,
+    0.1
+  ); /* Light green hover background */
+  --universal-orange-hover-text: #7ea817; /* Text on green hover */
+  --round-button: #7ea817; /* Circular action button color */
+  --add-to-cart-button: #101828; /* Dark cart button */
+
+  /* ── 6. Inventory & Special Badges ── */
+  --price-drop: #bbf7d0; /* Soft green for price drop badge */
+  --low-stock: #fde68a; /* Soft yellow for low stock warning */
+  --new-batch: #bfdbfe; /* Soft blue for new batch tag */
+
+  /* ── 7. Step Tracker & Stepper Component ── */
+  --step-tracker: #7ea817; /* Stepper line and active circle */
+  --step-tracker-text: #7ea817; /* Stepper active text */
+
+  /* ── 8. Wishlist Banner Colors ── */
+  --banner-bg: #fffbeb; /* Warm banner background */
+  --banner-border: #fde68a; /* Warm banner border */
+  --banner-text: #b45309; /* Dark amber banner text */
+  --banner-accent: #d97706; /* Banner accent color */
+
+  /* ── 9. Sidebar Navigation Colors ── */
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #7ea817;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: #7ea817;
+
+  /* ── 10. Admin Dashboard & Table Panel Colors ── */
+  --admin-title: #1f1f1f; /* Admin page headers */
+  --admin-description: #6a7282; /* Subtitles and helper text */
+  --admin-border: #e5e5e5; /* Table and card borders */
+  --admin-table-header-bg: #f6f5f4; /* Table column header background */
+  --admin-tab-bg: #f9fafb;
+  --admin-card-hover: #00000005;
+  --admin-input-ring: #7ea81733;
+
+  /* ── 11. Admin Stat Cards (Active / Pending / Suspended) ── */
+  --admin-stat-active-bg: #f1fdf4;
+  --admin-stat-active-border: #bbf7d0;
+  --admin-stat-active-text: #15803d;
+  --admin-stat-pending-bg: #fffbeb;
+  --admin-stat-pending-border: #fde68a;
+  --admin-stat-pending-text: #b45309;
+  --admin-stat-suspended-bg: #fef3f2;
+  --admin-stat-suspended-border: #fecaca;
+  --admin-stat-suspended-text: #b91c1c;
+
+  /* ── 12. Admin Badge Colors (Status & Roles) ── */
+  --admin-badge-green-bg: #dcfce8;
+  --admin-badge-green-border: #86efac;
+  --admin-badge-green-text: #15803d;
+  --admin-badge-purple-bg: #f5f3ff;
+  --admin-badge-purple-border: #ddd6fe;
+  --admin-badge-purple-text: #6d28d9;
+  --admin-badge-lime-bg: #f4f7ec;
+  --admin-badge-lime-border: #c8d89a;
+  --admin-badge-lime-text: #6b7f2a;
+  --admin-badge-blue-bg: #f0f6ff;
+  --admin-badge-blue-border: #bfdbfe;
+  --admin-badge-blue-text: #1d4ed8;
+
+  /* ── 13. Admin Status Indicator Dots ── */
+  --admin-status-active-dot: #15803d;
+  --admin-status-inactive-dot: #667085;
+  --admin-status-pending-dot: #f59e0b;
+  --admin-status-suspended-dot: #b91c1c;
+
+  /* ── 14. Chart & Data Visualization Colors ── */
+  --chart-1: #7ea817;
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ DARK MODE THEME VARIABLES (.dark)
+   Modify values here to customize dark theme colors (Dark Primary: #7C9A3D).
+   ═══════════════════════════════════════════════════════════════════════════ */
 .dark {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.448 0.119 151.328);
-    --primary-foreground: oklch(0.982 0.018 155.826);
-    --secondary: oklch(0.274 0.006 286.033);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.871 0.15 154.449);
-    --chart-2: oklch(0.723 0.219 149.579);
-    --chart-3: oklch(0.627 0.194 149.214);
-    --chart-4: oklch(0.527 0.154 150.069);
-    --chart-5: oklch(0.448 0.119 151.328);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.723 0.219 149.579);
-    --sidebar-primary-foreground: oklch(0.982 0.018 155.826);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
+  /* ── 1. Global Base & Layout Colors ── */
+  --background: oklch(0.145 0 0); /* Dark page background */
+  --foreground: oklch(0.985 0 0); /* Light text color */
+  --card: oklch(0.205 0 0); /* Dark card surface */
+  --card-foreground: oklch(0.985 0 0); /* Light text on cards */
+  --popover: oklch(0.205 0 0); /* Dark popover surface */
+  --popover-foreground: oklch(0.985 0 0);
+  --border: oklch(1 0 0 / 10%); /* Subdued dark borders */
+  --input: oklch(1 0 0 / 15%);
+  --ring: #7c9a3d;
+
+  /* ── 2. Primary Brand Colors (Dark Mode: #7C9A3D) ── */
+  --primary: #7c9a3d;
+  --primary-light: #8bad44;
+  --primary-dark: #66822e;
+  --primary-foreground: #ffffff;
+
+  /* ── 3. Secondary, Muted & Accent Colors ── */
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --destructive-foreground: oklch(1 0 0);
+
+  /* ── 4. Button & Interactive Action Colors (Dark: #7C9A3D) ── */
+  --universal-button: #7c9a3d;
+  --universal-orange: #7c9a3d;
+  --universal-orange-hover-bg: rgba(124, 154, 61, 0.2);
+  --universal-orange-hover-text: #7c9a3d;
+  --round-button: #7c9a3d;
+
+  /* ── 5. Step Tracker & Stepper ── */
+  --step-tracker: #7c9a3d;
+  --step-tracker-text: #7c9a3d;
+
+  /* ── 6. Wishlist Banner Colors (Dark) ── */
+  --banner-bg: #1e1b16;
+  --banner-border: #453008;
+  --banner-text: #fbbf24;
+  --banner-accent: #f59e0b;
+
+  /* ── 7. Sidebar Navigation (Dark) ── */
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: #7c9a3d;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: #7c9a3d;
+
+  /* ── 8. Admin Dashboard & Table Panel (Dark) ── */
+  --admin-title: #ffffff;
+  --admin-description: #9ca3af;
+  --admin-border: #374151;
+  --admin-table-header-bg: #1f2937;
+  --admin-tab-bg: transparent;
+  --admin-card-hover: #ffffff05;
+  --admin-input-ring: #7c9a3d40;
+
+  /* ── 9. Admin Stats Colors (Dark) ── */
+  --admin-stat-active-bg: #064e3b20;
+  --admin-stat-active-border: #065f46;
+  --admin-stat-active-text: #34d399;
+  --admin-stat-pending-bg: #78350f20;
+  --admin-stat-pending-border: #92400e;
+  --admin-stat-pending-text: #fbbf24;
+  --admin-stat-suspended-bg: #7f1d1d20;
+  --admin-stat-suspended-border: #991b1b;
+  --admin-stat-suspended-text: #f87171;
+
+  /* ── 10. Admin Badge Colors (Dark) ── */
+  --admin-badge-green-bg: #064e3b40;
+  --admin-badge-green-border: #065f46;
+  --admin-badge-green-text: #34d399;
+  --admin-badge-purple-bg: #4c1d9540;
+  --admin-badge-purple-border: #5b21b6;
+  --admin-badge-purple-text: #a78bfa;
+  --admin-badge-lime-bg: #36531440;
+  --admin-badge-lime-border: #3f6212;
+  --admin-badge-lime-text: #a3e635;
+  --admin-badge-blue-bg: #1e3a8a40;
+  --admin-badge-blue-border: #1e40af;
+  --admin-badge-blue-text: #60a5fa;
+
+  /* ── 11. Admin Status Indicator Dots (Dark) ── */
+  --admin-status-active-dot: #10b981;
+  --admin-status-inactive-dot: #9ca3af;
+  --admin-status-pending-dot: #f59e0b;
+  --admin-status-suspended-dot: #ef4444;
+
+  /* ── 12. Chart Colors (Dark) ── */
+  --chart-1: #7c9a3d;
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ VIEW TRANSITIONS (Smooth Theme Switching Animations)
+   ═══════════════════════════════════════════════════════════════════════════ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ BASE LAYER RESETS & SCROLLBAR STYLING
+   ═══════════════════════════════════════════════════════════════════════════ */
 @layer base {
   * {
     @apply border-border outline-ring/50;
-    }
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    scroll-behavior: smooth;
+  }
+
   body {
     @apply bg-background text-foreground;
-    }
-  button:not(:disabled), [role="button"]:not(:disabled) {
-    cursor: pointer;
-    }
+  }
+
+  /* Custom Webkit Scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border);
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    background-color: oklch(1 0 0 / 15%);
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    background-color: oklch(1 0 0 / 30%);
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   ■ UTILITIES & ACCESSIBLE REUSABLE BUTTON CLASSES
+   ═══════════════════════════════════════════════════════════════════════════ */
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #7ea81733 transparent;
+  }
+  .thin-scrollbar::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  .thin-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #7ea81733;
+    border-radius: 20px;
+  }
+  .thin-scrollbar:hover::-webkit-scrollbar-thumb {
+    background-color: #7ea81766;
+  }
+}
+
+@layer components {
+  /* Search Bar High Density Utilities */
+  .search-bar-container {
+    @apply relative w-full;
+  }
+  .search-bar-input[data-slot="input"] {
+    @apply h-9 w-full border-admin-border bg-card text-sm shadow-sm transition-all focus:ring-2 focus:ring-primary/20;
+    border-radius: var(--radius-xl) !important;
+    padding-left: 2.5rem !important;
+    padding-right: 2.25rem !important;
+  }
+  .search-bar-icon {
+    @apply pointer-events-none absolute top-1/2 left-3.5 z-10 -translate-y-1/2 text-muted-foreground;
+  }
+
+  /* Reusable Accessible B2B Button Classes */
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-bold transition-all duration-200;
+    background-color: var(--universal-button) !important;
+    color: #ffffff !important;
+    border: 1px solid var(--universal-button) !important;
+  }
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.9 !important;
+  }
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-bold transition-all duration-200;
+    background-color: var(--secondary) !important;
+    color: var(--secondary-foreground) !important;
+    border: 1px solid var(--border) !important;
+  }
+  .btn-secondary:hover:not(:disabled) {
+    background-color: var(--accent) !important;
+  }
+  .btn-secondary:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-bold transition-all duration-200;
+    background-color: transparent !important;
+    color: var(--universal-button) !important;
+    border: 1px solid var(--universal-button) !important;
+  }
+  .btn-outline:hover:not(:disabled) {
+    background-color: var(--universal-orange-hover-bg) !important;
+    color: var(--universal-orange-hover-text) !important;
+  }
+  .btn-outline:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl text-[13px] font-bold transition-all duration-200;
+    background-color: transparent !important;
+    color: var(--foreground) !important;
+    border: 1px solid transparent !important;
+  }
+  .btn-ghost:hover:not(:disabled) {
+    background-color: var(--accent) !important;
+    color: var(--foreground) !important;
+  }
+
+  /* Global Cursor Pointer Override for Interactive Elements */
+  button,
+  [role="button"],
+  .btn-primary,
+  .btn-secondary,
+  .btn-outline,
+  .btn-ghost {
+    cursor: pointer !important;
+  }
 }

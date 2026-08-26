@@ -7,27 +7,73 @@ yarn-error.log*
 .pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+.pnp
+.pnp.js
+
+# Build outputs
 dist
 dist-ssr
+build
+out
 *.local
 
-# env files (can opt-in for committing if needed)
-.env*
+# Environment files (do NOT commit secrets)
+.env
+.env.*
+!.env.example
 
-# turbo
+# Turbo
 .turbo
+
+# Cache
+.cache
+.eslintcache
+.stylelintcache
+
+# TypeScript build info
+*.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+!.vscode/settings.json
 .idea
 .DS_Store
+Thumbs.db
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
 
-# typescript
-*.tsbuildinfo
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Test coverage
+coverage
+*.lcov
+.nyc_output
+
+# Playwright / Cypress E2E artifacts
+playwright-report
+test-results
+cypress/videos
+cypress/screenshots
+
+# Storybook build
+storybook-static
+
+# Package manager lockfiles (keep only one)
+# pnpm-lock.yaml
+# yarn.lock
+
+# AI/Agent config (local only)
+.cursorrules.local

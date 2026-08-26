@@ -1,0 +1,53 @@
+# SmartGrow Strict Rules for AI Agents & Developers
+
+You MUST strictly follow these rules when working on this repository:
+
+1. BEFORE CREATING ANY CODE (SEARCH FIRST):
+   - You MUST search and inspect the codebase to check if a component, utility, hook, or pattern already exists.
+   - If an existing helper, hook, or component exists, REUSE IT. Do NOT create duplicate functions or components.
+   - Read docs/CONTRIBUTING.md and docs/design-guide.md completely.
+   - Place components in their designated folders:
+     - src/config/ (constants, settings)
+     - src/context/ (React context definitions)
+     - src/hooks/ (custom hooks: useTheme, useAuth)
+     - src/interface/ (data interfaces & contracts)
+     - src/middleware/ (route guards, auth gates)
+     - src/providers/ (context providers)
+     - src/services/ (Axios API calls: user.api.ts)
+     - src/types/ (types, enums, unions)
+     - src/utils/ (pure helpers, axios.ts, localstorage.ts)
+     - src/components/atoms/ (base atoms & atoms/application/)
+     - src/components/molecules/ (molecules/skeleton/)
+     - src/components/organisms/ (feature blocks: organisms/auth/)
+     - src/components/templates/ (layouts)
+     - src/components/pages/ (minimal route entry points)
+
+2. COMPONENT REUSE (STRICT - NO DUPLICATES):
+   - ALWAYS reuse existing components. Do NOT create custom tables, paginations, or modals.
+   - Data Tables: MUST use ApplicationTable (@/components/atoms/application).
+   - Pagination: MUST use ApplicationPagination (@/components/atoms/application).
+   - Dialogs: MUST use ApplicationDialog (@/components/atoms/application).
+   - Table Skeleton: MUST use TableSkeleton (@/components/molecules/skeleton).
+   - ShadCN Primitives: Reuse existing in packages/ui or add via npx shadcn@latest add <name> -y.
+
+3. SKELETON LOADING (MANDATORY FOR EVERY NEW DATA-FETCHING COMPONENT):
+   - Every new organism or page section that fetches data MUST have a corresponding skeleton.
+   - Skeleton file naming: ProductCard.tsx -> ProductCardSkeleton.tsx
+   - Place skeleton in src/components/molecules/skeleton/ and export from its index.ts
+   - Use <Skeleton /> from @workspace/ui/components/skeleton for shimmer effect.
+
+4. MOBILE RESPONSIVE DESIGN (MANDATORY):
+   - Every component, page, and organism MUST be fully mobile responsive.
+   - Use Tailwind breakpoint prefixes mobile-first: default styles for mobile, sm:/md:/lg: for larger screens.
+   - Use CSS Grid and Flexbox for layouts. Never use fixed pixel widths for full-width containers.
+   - Wrap ApplicationTable in a horizontally scrollable container: <div className="w-full overflow-x-auto">.
+   - Test design intent at: 375px (mobile), 768px (tablet), 1280px (desktop).
+
+5. STYLING & THEME:
+   - All colors come from packages/ui/src/styles/globals.css.
+   - Primary action buttons MUST use .btn-primary (Brand Green #7EA817 Light / #7C9A3D Dark).
+   - Secondary actions: .btn-secondary, Filters/Bordered: .btn-outline, Cancel/Ghost: .btn-ghost.
+
+6. AFTER CODING (MANDATORY VERIFICATION):
+   - You MUST run `npm run typecheck` and `npm run build` and ensure both exit with 0 errors before completing your task.
+   - Never leave broken imports or TypeScript type errors.
